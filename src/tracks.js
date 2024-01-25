@@ -1,11 +1,13 @@
 import { tracks } from "./spotifyData.js";
-let result = 10;
+let resultsSelect = document.getElementById("results-track");
+let resultsPerPage = parseInt(resultsSelect.value);
+let result = resultsPerPage;
 const trackData = document.querySelector(".track-data");
 const buttons = document.querySelectorAll(".track-button");
 function tracksDisplay() {
   let time;
   let tableR, cell, cellText;
-  for (let i = result - 10; i < result; i++) {
+  for (let i = result - resultsPerPage; i < result; i++) {
     if (i >= tracks.length) return;
     tableR = document.createElement("tr");
     for (let j = 0; j < 4; j++) {
@@ -44,18 +46,24 @@ function seek() {
       let choice;
       choice = e.target.innerText;
       if (choice === "Next") {
-        if (tracks.length - (result + 10) <= -10) return;
-        result = result + 10;
+        if (tracks.length - (result + resultsPerPage) <= resultsPerPage * -1) return;
+        result = result + resultsPerPage;
         clearTrackTable();
         tracksDisplay();
       } else {
-        if (result === 10) return;
+        if (result === resultsPerPage) return;
         clearTrackTable();
-        result = result - 10;
+        result = result - resultsPerPage;
         tracksDisplay();
       }
     })
   );
+  resultsSelect.addEventListener("change", function (e) {
+    result = parseInt(e.target.value);
+    resultsPerPage = parseInt(e.target.value);
+    clearTrackTable();
+    tracksDisplay();
+  });
 }
 seek();
 
@@ -70,13 +78,13 @@ function sortByMinutes(e) {
     sortButton.textContent = "Sort by Times Listened";
     tracks.sort((a, b) => b.get("mins") - a.get("mins"));
     clearTrackTable();
-    result = 10;
+    result = resultsPerPage;
     tracksDisplay();
   } else {
     sortButton.textContent = "Sort by Minutes";
     tracks.sort((a, b) => b.get("timesPlayed") - a.get("timesPlayed"));
     clearTrackTable();
-    result = 10;
+    result = resultsPerPage;
     tracksDisplay();
   }
 }
