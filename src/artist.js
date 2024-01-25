@@ -46,15 +46,26 @@ function seek() {
     btn.addEventListener("click", function (e) {
       let choice;
       choice = e.target.innerText;
-      if (choice === "Next") {
+      if (choice === "<<") {
+        clearArtistTable();
+        result = resultsPerPage;
+        artistDisplay();
+      }
+      else if (choice === "<") {
+        if (result === resultsPerPage) return;
+        clearArtistTable();
+        result = result - resultsPerPage;
+        artistDisplay();
+      }
+      else if (choice === ">") {
         if (artists.length - (result + resultsPerPage) <= resultsPerPage * -1) return;
         result = result + resultsPerPage;
         clearArtistTable();
         artistDisplay();
-      } else {
-        if (result === resultsPerPage) return;
+      }
+      else {
+        result = artists.length - (artists.length % resultsPerPage) + resultsPerPage;
         clearArtistTable();
-        result = result - resultsPerPage;
         artistDisplay();
       }
     })

@@ -46,15 +46,23 @@ function seek() {
     btn.addEventListener("click", function (e) {
       let choice;
       choice = e.target.innerText;
-      if (choice === "Next") {
+      if (choice === "<<") {
+        clearAlbumTable();
+        result = resultsPerPage;
+        albumDisplay();
+      } else if (choice === "<"){
+        if (result === resultsPerPage) return;
+        clearAlbumTable();
+        result = result - resultsPerPage;
+        albumDisplay();
+      } else if (choice === ">") {
         if (albums.length - (result + resultsPerPage) <= resultsPerPage * -1) return;
         result = result + resultsPerPage;
         clearAlbumTable();
         albumDisplay();
       } else {
-        if (result === resultsPerPage) return;
+        result = albums.length - (albums.length % resultsPerPage) + resultsPerPage;
         clearAlbumTable();
-        result = result - resultsPerPage;
         albumDisplay();
       }
     })

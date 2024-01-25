@@ -28,6 +28,7 @@ function tracksDisplay() {
     }
     trackData.appendChild(tableR);
   }
+  console.log(tracks.length);
 }
 
 //-------------Function to clear table-----------------//
@@ -45,15 +46,23 @@ function seek() {
     btn.addEventListener("click", function (e) {
       let choice;
       choice = e.target.innerText;
-      if (choice === "Next") {
+      if (choice === "<<") {
+        clearTrackTable();
+        result = resultsPerPage;
+        tracksDisplay();
+      } else if (choice === "<"){
+        if (result === resultsPerPage) return;
+        clearTrackTable();
+        result = result - resultsPerPage;
+        tracksDisplay();
+      } else if (choice === ">") {
         if (tracks.length - (result + resultsPerPage) <= resultsPerPage * -1) return;
         result = result + resultsPerPage;
         clearTrackTable();
         tracksDisplay();
       } else {
-        if (result === resultsPerPage) return;
+        result = tracks.length - (tracks.length % resultsPerPage) + resultsPerPage;
         clearTrackTable();
-        result = result - resultsPerPage;
         tracksDisplay();
       }
     })
