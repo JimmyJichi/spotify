@@ -1,4 +1,4 @@
-import { artists } from "./spotifyData";
+import { artists } from "./spotifyData.js";
 let result = 10;
 const artistData = document.querySelector(".artist-data");
 const buttons = document.querySelectorAll(".artist-button");

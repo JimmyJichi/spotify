@@ -1,9 +1,9 @@
-import { albumDisplay, clearAlbumTable } from "./albums";
-import { artistDisplay, clearArtistTable } from "./artist";
-import { clearTrackTable, tracksDisplay } from "./tracks";
-import { clearOtherData, other, other2 } from "./other";
-import { clearMessage, home, invalidData, noUpload } from "./home";
-import { active } from "./script";
+import { albumDisplay, clearAlbumTable } from "./albums.js";
+import { artistDisplay, clearArtistTable } from "./artist.js";
+import { clearTrackTable, tracksDisplay } from "./tracks.js";
+import { clearOtherData, other, other2 } from "./other.js";
+import { clearMessage, home, invalidData, noUpload } from "./home.js";
+import { active } from "./script.js";
 
 const loader = document.querySelector(".loader");
 

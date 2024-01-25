@@ -1,4 +1,4 @@
-import { dayEnd, dayStart, hoursListened } from "./spotifyData";
+import { dayEnd, dayStart, hoursListened } from "./spotifyData.js";
 const ele = document.createElement("p");
 const ele2 = document.createElement("p");
 const ele4 = document.createElement("p");

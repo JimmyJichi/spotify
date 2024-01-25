@@ -1,4 +1,4 @@
-import { tracks } from "./spotifyData";
+import { tracks } from "./spotifyData.js";
 let result = 10;
 const trackData = document.querySelector(".track-data");
 const buttons = document.querySelectorAll(".track-button");

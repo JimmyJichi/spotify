@@ -1,4 +1,4 @@
-import { platform, countries } from "./spotifyData";
+import { platform, countries } from "./spotifyData.js";
 
 const platformList = document.querySelector(".platform");
 const countriesList = document.querySelector(".countries");
