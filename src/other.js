@@ -25,9 +25,17 @@ function other2() {
   let li;
   countries.forEach((ele) => {
     li = document.createElement("li");
-    li.textContent = ele;
+    li.textContent = getFlagEmoji(ele) + ele;
     countriesList.appendChild(li);
   });
+}
+
+function getFlagEmoji(countryCode) {
+  const codePoints = countryCode
+    .toUpperCase()
+    .split('')
+    .map(char =>  127397 + char.charCodeAt());
+  return String.fromCodePoint(...codePoints);
 }
 
 export { other, other2, clearOtherData };
