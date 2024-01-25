@@ -6,12 +6,12 @@ const albumData = document.querySelector(".album-data");
 const buttons = document.querySelectorAll(".album-button");
 
 function albumDisplay() {
-  let time;
+  let time, firstPlayed;
   let tableR, cell, cellText;
   for (let i = result - resultsPerPage; i < result; i++) {
     if (i >= albums.length) return;
     tableR = document.createElement("tr");
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 5; j++) {
       cell = document.createElement("td");
       cellText;
       if (j === 0)
@@ -20,9 +20,12 @@ function albumDisplay() {
         cellText = document.createTextNode(`${albums[i].get("aname")}`);
       else if (j === 2)
         cellText = document.createTextNode(`${albums[i].get("timesPlayed")}`);
-      else {
+      else if (j === 3) {
         time = (albums[i].get("mins") / 60000 / 60).toFixed(2);
         cellText = document.createTextNode(`${time}`);
+      } else {
+        firstPlayed = new Date(albums[i].get("firstPlayed"));
+        cellText = document.createTextNode(`${firstPlayed.toUTCString()}`);
       }
       cell.appendChild(cellText);
       tableR.appendChild(cell);
@@ -78,20 +81,25 @@ seek();
 
 //------------SORT--------------//
 
-const sortButton = document.querySelector(".sort-album");
+const sortSelect = document.getElementById("sort-album");
 
-sortButton.addEventListener("click", sortByMinutes);
+sortSelect.addEventListener("change", sortAlbums);
 
-function sortByMinutes(e) {
-  if (e.target.innerText === "Sort by Minutes") {
-    sortButton.textContent = "Sort by Times Listened";
+function sortAlbums(e) {
+  if (e.target.value === "minutes") {
     albums.sort((a, b) => b.get("mins") - a.get("mins"));
     clearAlbumTable();
     result = resultsPerPage;
     albumDisplay();
-  } else {
-    sortButton.textContent = "Sort by Minutes";
+  } else if (e.target.value === "times") {
     albums.sort((a, b) => b.get("timesPlayed") - a.get("timesPlayed"));
+    clearAlbumTable();
+    result = resultsPerPage;
+    albumDisplay();
+  } else {
+    albums.sort(function (a, b) {
+      return new Date(a.get("firstPlayed")) - new Date(b.get("firstPlayed"));
+    });
     clearAlbumTable();
     result = resultsPerPage;
     albumDisplay();

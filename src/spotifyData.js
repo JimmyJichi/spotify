@@ -60,6 +60,7 @@ function artistsInfo(record) {
     unArtist.set("name", record.master_metadata_album_artist_name);
     unArtist.set("mins", record.ms_played);
     unArtist.set("timesPlayed", 1);
+    unArtist.set("firstPlayed", record.ts);
     artists.push(unArtist);
   }
 }
@@ -85,6 +86,7 @@ function tracksInfo(record) {
     unTrack.set("mins", record.ms_played);
     unTrack.set("timesPlayed", 1);
     unTrack.set("url", record.spotify_track_uri);
+    unTrack.set("firstPlayed", record.ts);
     tracks.push(unTrack);
   }
 }
@@ -109,6 +111,7 @@ function albumInfo(record) {
     unAlbum.set("aname", record.master_metadata_album_artist_name);
     unAlbum.set("mins", record.ms_played);
     unAlbum.set("timesPlayed", 1);
+    unAlbum.set("firstPlayed", record.ts);
     albums.push(unAlbum);
   }
 }

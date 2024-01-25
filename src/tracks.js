@@ -5,12 +5,12 @@ let result = resultsPerPage;
 const trackData = document.querySelector(".track-data");
 const buttons = document.querySelectorAll(".track-button");
 function tracksDisplay() {
-  let time;
+  let time, firstPlayed;
   let tableR, cell, cellText;
   for (let i = result - resultsPerPage; i < result; i++) {
     if (i >= tracks.length) return;
     tableR = document.createElement("tr");
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 5; j++) {
       cell = document.createElement("td");
       cellText;
       if (j === 0) {
@@ -19,16 +19,18 @@ function tracksDisplay() {
         cellText = document.createTextNode(`${tracks[i].get("aname")}`);
       else if (j === 2)
         cellText = document.createTextNode(`${tracks[i].get("timesPlayed")}`);
-      else {
+      else if (j === 3) {
         time = (tracks[i].get("mins") / 60000 / 60).toFixed(2);
         cellText = document.createTextNode(`${time}`);
+      } else {
+        firstPlayed = new Date(tracks[i].get("firstPlayed"));
+        cellText = document.createTextNode(`${firstPlayed.toUTCString()}`);
       }
       cell.appendChild(cellText);
       tableR.appendChild(cell);
     }
     trackData.appendChild(tableR);
   }
-  console.log(tracks.length);
 }
 
 //-------------Function to clear table-----------------//
@@ -78,20 +80,25 @@ seek();
 
 //------------SORT---------------//
 
-const sortButton = document.querySelector(".sort-track");
+const sortSelect = document.getElementById("sort-track");
 
-sortButton.addEventListener("click", sortByMinutes);
+sortSelect.addEventListener("change", sortTracks);
 
-function sortByMinutes(e) {
-  if (e.target.innerText === "Sort by Minutes") {
-    sortButton.textContent = "Sort by Times Listened";
+function sortTracks(e) {
+  if (e.target.value === "minutes") {
     tracks.sort((a, b) => b.get("mins") - a.get("mins"));
     clearTrackTable();
     result = resultsPerPage;
     tracksDisplay();
-  } else {
-    sortButton.textContent = "Sort by Minutes";
+  } else if (e.target.value === "times") {
     tracks.sort((a, b) => b.get("timesPlayed") - a.get("timesPlayed"));
+    clearTrackTable();
+    result = resultsPerPage;
+    tracksDisplay();
+  } else {
+    tracks.sort(function (a, b) {
+      return new Date(a.get("firstPlayed")) - new Date(b.get("firstPlayed"));
+    });
     clearTrackTable();
     result = resultsPerPage;
     tracksDisplay();

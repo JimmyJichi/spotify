@@ -6,12 +6,12 @@ const artistData = document.querySelector(".artist-data");
 const buttons = document.querySelectorAll(".artist-button");
 
 function artistDisplay() {
-  let time;
+  let time, firstPlayed;
   let tableR, cell, cellText;
   for (let i = result - resultsPerPage; i < result; i++) {
     if (i >= artists.length) return;
     tableR = document.createElement("tr");
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 5; j++) {
       cell = document.createElement("td");
       cellText;
       if (j === 0) {
@@ -23,7 +23,12 @@ function artistDisplay() {
       } else if (j === 2) {
         time = (artists[i].get("mins") / 60000).toFixed(2);
         cellText = document.createTextNode(`${time}`);
-      } else cellText = document.createTextNode(`${(time / 60).toFixed(2)}`);
+      } else if (j === 3) {
+        cellText = document.createTextNode(`${(time / 60).toFixed(2)}`);
+      } else {
+        firstPlayed = new Date(artists[i].get("firstPlayed"));
+        cellText = document.createTextNode(`${firstPlayed.toUTCString()}`);
+      }
       cell.appendChild(cellText);
       tableR.appendChild(cell);
     }
@@ -82,20 +87,25 @@ seek();
 
 //------------SORT---------------//
 
-const sortButton = document.querySelector(".sort-artist");
+const sortSelect = document.getElementById("sort-artist");
 
-sortButton.addEventListener("click", sortByMinutes);
+sortSelect.addEventListener("change", sortArtists);
 
-function sortByMinutes(e) {
-  if (e.target.innerText === "Sort by Minutes") {
-    sortButton.textContent = "Sort by Times Listened";
+function sortArtists(e) {
+  if (e.target.value === "minutes") {
     artists.sort((a, b) => b.get("mins") - a.get("mins"));
     clearArtistTable();
     result = resultsPerPage;
     artistDisplay();
-  } else {
-    sortButton.textContent = "Sort by Minutes";
+  } else if (e.target.value === "times") {
     artists.sort((a, b) => b.get("timesPlayed") - a.get("timesPlayed"));
+    clearArtistTable();
+    result = resultsPerPage;
+    artistDisplay();
+  } else {
+    artists.sort(function (a, b) {
+      return new Date(a.get("firstPlayed")) - new Date(b.get("firstPlayed"));
+    });
     clearArtistTable();
     result = resultsPerPage;
     artistDisplay();

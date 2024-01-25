@@ -53,6 +53,7 @@
             <th>Artist</th>
             <th>Times Listened</th>
             <th>Hours Listened</th>
+            <th>First Listen</th>
           </tr>
         </thead>
         <tbody class="album-data"></tbody>
@@ -64,7 +65,11 @@
         <button class="album-button button">&gt;&gt;</button>
       </div>
       <div>
-        <button class="sort-album button">Sort by Minutes</button>
+        <select id="sort-album">
+          <option value="times" selected>Sort by Times Listened</option>
+          <option value="minutes">Sort by Hours Listened</option>
+          <option value="first">Sort by First Listen</option>
+        </select>
         <select id="results-album">
           <option value="10" selected>10</option>
           <option value="20">20</option>
@@ -82,6 +87,7 @@
             <th>Artist</th>
             <th>Times Listened</th>
             <th>Hours Listened</th>
+            <th>First Listen</th>
           </tr>
         </thead>
         <tbody class="track-data"></tbody>
@@ -93,7 +99,11 @@
         <button class="track-button button">&gt;&gt;</button>
       </div>
       <div>
-        <button class="sort-track button">Sort by Minutes</button>
+        <select id="sort-track">
+          <option value="times" selected>Sort by Times Listened</option>
+          <option value="minutes">Sort by Hours Listened</option>
+          <option value="first">Sort by First Listen</option>
+        </select>
         <select id="results-track">
           <option value="10" selected>10</option>
           <option value="20">20</option>
@@ -111,6 +121,7 @@
             <th>Times Listened</th>
             <th>Minutes Listened</th>
             <th>Hours Listened</th>
+            <th>First Listen</th>
           </tr>
         </thead>
         <tbody class="artist-data"></tbody>
@@ -122,7 +133,11 @@
         <button class="artist-button button">&gt;&gt;</button>
       </div>
       <div>
-        <button class="sort-artist button">Sort by Minutes</button>
+        <select id="sort-artist">
+          <option value="times" selected>Sort by Times Listened</option>
+          <option value="minutes">Sort by Hours Listened</option>
+          <option value="first">Sort by First Listen</option>
+        </select>
         <select id="results-artist">
           <option value="10" selected>10</option>
           <option value="20">20</option>
